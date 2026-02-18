@@ -1,7 +1,11 @@
 require('dotenv').config()
+
 const express = require('express')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
+
+const authRoutes = require('./routes/auth.routes')
+const authMiddleware = require('./middlewares/auth.middleware')
 
 const app = express()
 
@@ -15,8 +19,14 @@ mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB connecté"))
 .catch(err => console.log(err))
 
+app.use('/', authRoutes)
+
 app.get('/', (req, res) => {
     res.render('login')
+})
+
+app.get('/dashboard', authMiddleware, (req, res) => {
+    res.render('dashboard')
 })
 
 app.listen(3000, () => {
