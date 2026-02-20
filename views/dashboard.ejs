@@ -1,2 +1,19 @@
-<h1>Bienvenue sur le dashboard</h1>
-<a href="/logout">Déconnexion</a>
+<h1>Dashboard</h1>
+
+<h2>Catways</h2>
+
+<table border="1">
+    <tr>
+        <th>Numéro</th>
+        <th>Type</th>
+        <th>État</th>
+    </tr>
+
+    <% catways.forEach(catway => { %>
+        <tr>
+            <td><%= catway.catwayNumber %></td>
+            <td><%= catway.catwayType %></td>
+            <td><%= catway.catwayState %></td>
+        </tr>
+    <% }) %>
+</table>
