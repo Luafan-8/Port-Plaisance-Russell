@@ -1,44 +1,43 @@
-require('dotenv').config()
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
-const express = require('express')
-const mongoose = require('mongoose')
-const cookieParser = require('cookie-parser')
+const app = express();
 
-const authRoutes = require('./routes/auth.routes')
-const authMiddleware = require('./middlewares/auth.middleware')
-const Catway = require('./models/Catways')
-const catwayRoutes = require('./routes/catway.routes')
-
-const reservationRoutes = require('./routes/reservation.routes')
-
-const app = express()
-
-//middlewares
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
-
-app.set('view engine', 'ejs')
-
+// Connexion MongoDB
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB connecté"))
-.catch(err => console.log(err))
+  .then(() => console.log('MongoDB connecté'))
+  .catch(err => console.error(err));
 
-//routes
-app.use('/', authRoutes)
-app.use(catwayRoutes)
-app.use(reservationRoutes)
+// Middlewares
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(methodOverride('_method'));
+app.use(cookieParser());
 
-app.get('/', (req, res) => {
-    res.render('login')
-})
+// 🔑 Session DOIT être avant les routes
+app.use(session({
+    secret: 'monsecret',
+    resave: false,
+    saveUninitialized: false
+}));
 
-app.get('/dashboard', authMiddleware, async (req, res) => {
-    const catways = await Catway.find()
-    res.render('dashboard', { catways })
-})
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
 
-app.listen(3000, () => {
-    console.log("Serveur lancé sur le port 3000")
-})
+// Routes
+app.use('/', require('./routes/auth.routes'));
+app.use('/users', require('./routes/user.route'));
+app.use('/catways', require('./routes/catway.routes'));
+app.use('/reservations', require('./routes/reservation.routes'));
+// Pas besoin de /dashboard séparé si défini dans auth.routes
 
+// Page d'accueil
+app.get('/', (req, res) => res.render('index'));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

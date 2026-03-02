@@ -18,7 +18,10 @@ exports.login = async (req, res) => {
             { expiresIn: "1d" }
         )
 
-        res.cookie("token", token)
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "lax"
+})
         res.redirect('/dashboard')
 
     } catch (err) {

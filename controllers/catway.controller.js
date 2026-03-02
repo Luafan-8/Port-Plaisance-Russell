@@ -1,49 +1,31 @@
-const Catway = require('../models/Catways')
+const Catway = require('../models/Catway');
 
-exports.getAllCatways = async (req, res) => {
-    try {
-        const catways = await Catway.find()
-        res.status(200).json(catways)
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
-}
+exports.getAllCatways = async (req,res) => {
+  const catways = await Catway.find();
+  res.render('catways', { catways });
+};
 
-exports.getCatwayById = async (req, res) => {
-    try {
-        const catway = await Catway.findById(req.params.id)
-        if (!catway) return res.status(404).json({ message: "Catway non trouvé" })
-        res.status(200).json(catway)
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
-}
+exports.getCatwayById = async (req,res) => {
+  const catway = await Catway.findOne({ catwayNumber: req.params.id });
+  res.json(catway);
+};
 
-exports.createCatway = async (req, res) => {
-    try {
-        const newCatway = await Catway.create(req.body)
-        res.status(201).json(newCatway)
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-    }
-}
+exports.createCatway = async (req,res) => {
+  const { catwayNumber, catwayType, catwayState } = req.body;
+  const catway = new Catway({ catwayNumber, catwayType, catwayState });
+  await catway.save();
+  res.redirect('/catways');
+};
 
-exports.updateCatway = async (req, res) => {
-    try {
-        const updated = await Catway.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        if (!updated) return res.status(404).json({ message: "Catway non trouvé" })
-        res.status(200).json(updated)
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-    }
-}
+exports.updateCatway = async (req,res) => {
+  const catway = await Catway.findOne({ catwayNumber: req.params.id });
+  if(!catway) return res.status(404).send('Non trouvé');
+  catway.catwayState = req.body.catwayState || catway.catwayState;
+  await catway.save();
+  res.redirect('/catways');
+};
 
-exports.deleteCatway = async (req, res) => {
-    try {
-        const deleted = await Catway.findByIdAndDelete(req.params.id)
-        if (!deleted) return res.status(404).json({ message: "Catway non trouvé" })
-        res.status(200).json({ message: "Catway supprimé" })
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
-}
+exports.deleteCatway = async (req,res) => {
+  await Catway.findOneAndDelete({ catwayNumber: req.params.id });
+  res.redirect('/catways');
+};

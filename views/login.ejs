@@ -1,5 +1,14 @@
+<%- include('partials/header') %>
+
+<h2>Login</h2>
+<% if (error) { %>
+    <p style="color:red;"><%= error %></p>
+<% } %>
+
 <form method="POST" action="/login">
-    <input type="email" name="email" placeholder="Email" required />
-    <input type="password" name="password" placeholder="Mot de passe" required />
-    <button type="submit">Connexion</button>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Mot de passe" required>
+    <button type="submit">Se connecter</button>
 </form>
+
+<%- include('partials/footer') %>

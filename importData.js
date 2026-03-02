@@ -2,7 +2,7 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const fs = require('fs')
 
-const Catway = require('./models/Catways')
+const Catway = require('./models/Catway')
 const Reservation = require('./models/Reservation')
 
 mongoose.connect(process.env.MONGO_URI)

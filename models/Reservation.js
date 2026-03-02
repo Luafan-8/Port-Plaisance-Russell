@@ -1,11 +1,26 @@
 const mongoose = require('mongoose')
 
 const reservationSchema = new mongoose.Schema({
-    catwayNumber: Number,
-    clientName: String,
-    boatName: String,
-    startDate: Date,
-    endDate: Date
+    catwayNumber: {
+        type: Number,
+        required: true
+    },
+    clientName: {
+        type: String,
+        required: true
+    },
+    boatName: {
+        type: String,
+        required: true
+    },
+    startDate: {
+        type: Date,
+        required: true
+    },
+    endDate: {
+        type: Date,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('Reservation', reservationSchema)

@@ -1,19 +1,35 @@
-<h1>Dashboard</h1>
+<%- include('partials/header') %>
 
-<h2>Catways</h2>
+<h1>Tableau de bord</h1>
+<p>Bonjour, <strong><%= user.username %></strong> (<%= user.email %>)</p>
+<p>Date du jour : <%= date %></p>
 
+<nav>
+  <a href="/catways">Catways</a> |
+  <a href="/reservations">Réservations</a> |
+  <a href="/users">Utilisateurs</a> |
+  <a href="/logout">Déconnexion</a> |
+  <a href="/docs">Documentation API</a>
+</nav>
+
+<h2>Réservations en cours</h2>
 <table border="1">
+  <tr>
+    <th>Catway</th>
+    <th>Client</th>
+    <th>Bateau</th>
+    <th>Début</th>
+    <th>Fin</th>
+  </tr>
+  <% reservations.forEach(r => { %>
     <tr>
-        <th>Numéro</th>
-        <th>Type</th>
-        <th>État</th>
+      <td><%= r.catwayNumber %></td>
+      <td><%= r.clientName %></td>
+      <td><%= r.boatName %></td>
+      <td><%= new Date(r.startDate).toLocaleDateString() %></td>
+      <td><%= new Date(r.endDate).toLocaleDateString() %></td>
     </tr>
-
-    <% catways.forEach(catway => { %>
-        <tr>
-            <td><%= catway.catwayNumber %></td>
-            <td><%= catway.catwayType %></td>
-            <td><%= catway.catwayState %></td>
-        </tr>
-    <% }) %>
+  <% }) %>
 </table>
+
+<%- include('partials/footer') %>

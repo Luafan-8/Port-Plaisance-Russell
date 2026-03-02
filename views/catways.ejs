@@ -1,0 +1,41 @@
+<%- include('partials/header') %>
+<h1>Catways</h1>
+<a href="/dashboard">Dashboard</a>
+
+<h2>Créer un catway</h2>
+<form action="/catways" method="POST">
+  <input type="number" name="catwayNumber" placeholder="Numéro" required>
+  <select name="catwayType" required>
+    <option value="long">Long</option>
+    <option value="short">Short</option>
+  </select>
+  <input type="text" name="catwayState" placeholder="État">
+  <button type="submit">Créer</button>
+</form>
+
+<h2>Liste des catways</h2>
+<table border="1">
+<tr>
+  <th>Numéro</th>
+  <th>Type</th>
+  <th>État</th>
+  <th>Actions</th>
+</tr>
+<% catways.forEach(c => { %>
+<tr>
+  <td><%= c.catwayNumber %></td>
+  <td><%= c.catwayType %></td>
+  <td><%= c.catwayState %></td>
+  <td>
+    <form action="/catways/<%= c.catwayNumber %>?_method=PUT" method="POST" style="display:inline;">
+      <input type="text" name="catwayState" placeholder="Nouvel état">
+      <button type="submit">Modifier</button>
+    </form>
+    <form action="/catways/<%= c.catwayNumber %>?_method=DELETE" method="POST" style="display:inline;">
+      <button type="submit">Supprimer</button>
+    </form>
+  </td>
+</tr>
+<% }) %>
+</table>
+<%- include('partials/footer') %>
