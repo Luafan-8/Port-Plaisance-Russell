@@ -1,7 +1,13 @@
 <%- include('partials/header') %>
 
 <h1>Tableau de bord</h1>
-<p>Bonjour, <strong><%= user.username %></strong> (<%= user.email %>)</p>
+
+<% if (user) { %>
+    <p>Bonjour, <strong><%= user.username %></strong> (<%= user.email %>)</p>
+<% } else { %>
+    <p>Utilisateur non connecté</p>
+<% } %>
+
 <p>Date du jour : <%= date %></p>
 
 <nav>

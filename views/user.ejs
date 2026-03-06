@@ -4,37 +4,51 @@
 <a href="/dashboard">Retour au tableau de bord</a>
 
 <h2>Créer un utilisateur</h2>
-<form action="/users" method="POST">
+<form action="/users/create" method="POST">
   <input type="text" name="username" placeholder="Nom d'utilisateur" required>
   <input type="email" name="email" placeholder="Email" required>
   <input type="password" name="password" placeholder="Mot de passe" required>
+  <select name="role">
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
   <button type="submit">Créer</button>
 </form>
 
 <h2>Liste des utilisateurs</h2>
 <table border="1">
-  <tr>
-    <th>Nom</th>
-    <th>Email</th>
-    <th>Actions</th>
-  </tr>
-  <% users.forEach(u => { %>
-    <tr>
-      <td><%= u.username %></td>
-      <td><%= u.email %></td>
-      <td>
-        <form action="/users/<%= u.email %>?_method=DELETE" method="POST" style="display:inline;">
-          <button type="submit">Supprimer</button>
-        </form>
-        <!-- Formulaire édition simplifié -->
-        <form action="/users/<%= u.email %>?_method=PUT" method="POST" style="display:inline;">
-          <input type="text" name="username" placeholder="Nouveau nom">
-          <input type="password" name="password" placeholder="Nouveau mot de passe">
-          <button type="submit">Modifier</button>
-        </form>
-      </td>
-    </tr>
-  <% }) %>
+<tr>
+  <th>Nom</th>
+  <th>Email</th>
+  <th>Role</th>
+  <th>Actions</th>
+</tr>
+<% users.forEach(u => { %>
+<tr>
+  <td><%= u.username %></td>
+  <td><%= u.email %></td>
+  <td><%= u.role %></td>
+  <td>
+    <!-- Supprimer -->
+    <% if(u.role !== 'admin') { %>
+    <form action="/users/delete/<%= u.email %>" method="POST" style="display:inline;">
+      <button type="submit">Supprimer</button>
+    </form>
+    <% } %>
+
+    <!-- Modifier -->
+    <form action="/users/update/<%= u.email %>" method="POST" style="display:inline;">
+      <input type="text" name="username" placeholder="Nouveau nom">
+      <input type="password" name="password" placeholder="Nouveau mot de passe">
+      <select name="role">
+        <option value="user" <%= u.role === 'user' ? 'selected' : '' %>>User</option>
+        <option value="admin" <%= u.role === 'admin' ? 'selected' : '' %>>Admin</option>
+      </select>
+      <button type="submit">Modifier</button>
+    </form>
+  </td>
+</tr>
+<% }) %>
 </table>
 
 <%- include('partials/footer') %>

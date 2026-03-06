@@ -27,11 +27,11 @@
   <td><%= c.catwayType %></td>
   <td><%= c.catwayState %></td>
   <td>
-    <form action="/catways/<%= c.catwayNumber %>?_method=PUT" method="POST" style="display:inline;">
+    <form action="/catways/update/<%= c.catwayNumber %>" method="POST" style="display:inline;">
       <input type="text" name="catwayState" placeholder="Nouvel état">
       <button type="submit">Modifier</button>
     </form>
-    <form action="/catways/<%= c.catwayNumber %>?_method=DELETE" method="POST" style="display:inline;">
+    <form action="/catways/delete/<%= c.catwayNumber %>" method="POST" style="display:inline;">
       <button type="submit">Supprimer</button>
     </form>
   </td>

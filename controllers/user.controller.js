@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
-// Liste de tous les utilisateurs
+//liste d'utilisateurs
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -11,7 +11,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-// Détails d'utilisateur
+//détails d'utilisateur
 exports.getUserByEmail = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.params.email }).select('-password');
@@ -22,7 +22,7 @@ exports.getUserByEmail = async (req, res) => {
   }
 };
 
-// Création d'utilisateur
+//création d'utilisateur
 exports.createUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -37,7 +37,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-//Modification d'utilisateur
+//modification d'utilisateur
 exports.updateUser = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -54,7 +54,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-//Suppression d'utilisateur
+//suppression d'utilisateur
 exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findOneAndDelete({ email: req.params.email });
