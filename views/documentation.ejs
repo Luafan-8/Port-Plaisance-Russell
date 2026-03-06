@@ -1,0 +1,156 @@
+<%- include('partials/header') %>
+
+<h1>Documentation API - Port de Plaisance Russell</h1>
+
+<h2>Authentification</h2>
+
+<table border="1">
+<tr>
+<th>Méthode</th>
+<th>Route</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/login</td>
+<td>Affiche la page de connexion</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/login</td>
+<td>Connexion utilisateur</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/logout</td>
+<td>Déconnexion utilisateur</td>
+</tr>
+
+</table>
+
+
+<h2>Utilisateurs</h2>
+
+<table border="1">
+<tr>
+<th>Méthode</th>
+<th>Route</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/users</td>
+<td>Liste des utilisateurs</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/users/create</td>
+<td>Créer un utilisateur</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/users/update/:email</td>
+<td>Modifier un utilisateur</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/users/delete/:email</td>
+<td>Supprimer un utilisateur</td>
+</tr>
+
+</table>
+
+
+<h2>Catways</h2>
+
+<table border="1">
+<tr>
+<th>Méthode</th>
+<th>Route</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/catways</td>
+<td>Liste des catways</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/catways/:id</td>
+<td>Détail d'un catway</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/catways/create</td>
+<td>Créer un catway</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/catways/update/:id</td>
+<td>Modifier un catway</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/catways/delete/:id</td>
+<td>Supprimer un catway</td>
+</tr>
+
+</table>
+
+
+<h2>Réservations</h2>
+
+<table border="1">
+<tr>
+<th>Méthode</th>
+<th>Route</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/reservations</td>
+<td>Liste des réservations</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/reservations/:id</td>
+<td>Détail d'une réservation</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/reservations/create</td>
+<td>Créer une réservation</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/reservations/update/:id</td>
+<td>Modifier une réservation</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/reservations/delete/:id</td>
+<td>Supprimer une réservation</td>
+</tr>
+
+</table>
+
+<a href="/dashboard">Retour au tableau de bord</a>
+
+<%- include('partials/footer') %>
